@@ -4,27 +4,98 @@ import sys
 import pattern
 
 class Grid():
+    """Represents a grid of integers, a game map"""
+    
     def __init__(self,
                  rows = 0,
                  cols = 0,
                  min_val = 0,
-                 max_val = 0,
                  rand_seed = 0,
-                 pattern = 0):
+                 pattern = None):
+        """Constructs and generates a grid with supplied or default values
+        """
         self.rows = rows
         self.cols = cols
         self.min_val = min_val
-        self.max_val = max_val
+        self.max_val = 0  # Set by pattern generation
         self.rand_seed = rand_seed
         self.pattern = pattern
+        self.path = None #Can only be assigned by generating a grid
 
-        random.seed(self.rand_seed)
-        self.grid = [[random.randint(self.min_val, self.max_val) 
-                      for i in range(self.rows)] 
-                      for j in range(self.cols)]
+
+    def get_valid_next(self, pos, path):
+        """given a current position and path, returns a list of valid next
+           positions for the path, or an empty list if there are none.
+        """
+        out = []
+        
+        print("get_valid_next(\n\tpos = {}\n\tpath = {}\n)".format(pos, path))
+        for i in range(-1, 2):
+            for j in range(-1, 2):
+                if abs(i) == abs(j):
+                    pass
+                elif not 0 <= pos[0] + i < self.rows:
+                    pass
+                elif not 0 <= pos[1] + j < self.cols:
+                    pass
+                elif (pos[0] + i, pos[1] + j) not in path:
+                    out.append((pos[0] + i, pos[1] + j))
+
+        return out
         
 
-    def print_grid(self):
+            
+        
+    def generate_grid(self):
+        """Generates a grid, ensuring that there is a valid path from the
+           top-left corner of the grid to the bottom right
+        """
+        path = [(0, 0)] # Spaces in the correct path, in (row, column) format
+        pos = (0, 0) # Initial position for mapping 
+        
+        random.seed(self.rand_seed)
+        
+        self.grid = [[0 for i in range(self.rows)] for j in range(self.cols)]
+        while pos != (self.rows - 1, self.cols - 1):
+            valid_next = self.get_valid_next(pos, path)
+            if not valid_next: 
+                pos = (0, 0)
+                path = [(0, 0)]
+            else:
+                new_pos = valid_next[random.randint(0, len(valid_next) - 1)]
+                path.append(new_pos)
+                pos = new_pos
+           
+        self.path = path
+
+
+        if self.pattern:
+            result = [] # List to store all numbers in pattern
+            self.grid[0][0] = self.min_val;
+            cur_val = self.min_val
+            result.append(cur_val)
+            for path_coord in self.path[1:]:
+                next_val = self.pattern.apply_pattern(cur_val)
+                self.grid[path_coord[0]][path_coord[1]] = next_val
+                cur_val = next_val
+                result.append(cur_val)
+
+            self.max_val = max(result)
+
+            for r in range(self.rows):
+                for c in range(self.cols):
+                    if (r, c) not in self.path:
+                        self.grid[r][c] = random.randint(self.min_val, self.max_val)
+        else:
+            self.grid = [[random.randint(self.min_val, 1000)
+                            for i in range(self.rows)]
+                            for j in range(self.cols)]
+
+
+        
+
+
+    def print_grid(self, file = sys.stdout):
+        """Prints the grid to a file or stream, stdout by default."""
         for r in range(self.rows):
-            print(self.grid[r])
-    
+            print(self.grid[r])    
