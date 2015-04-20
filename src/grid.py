@@ -84,8 +84,6 @@ class Grid():
                         num = random.randint(self.min_val, self.max_val)
                         self.grid[r][c] = num
 
-            for p in self.path:
-                self.solution.append(self.grid[p[0]][p[1]])
 
         else:
             self.grid = [[random.randint(self.min_val, 1000)
