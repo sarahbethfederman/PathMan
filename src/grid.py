@@ -94,5 +94,15 @@ class Grid():
 
     def print_grid(self, file=sys.stdout):
         """Prints the grid to a file or stream, stdout by default."""
+        if self.max_val > 0:
+            max_len = len(str(self.max_val))
+        else:
+            max_len = 4
+
         for r in range(self.rows):
-            print(self.grid[r])
+            to_print = ""
+            for c in range(self.cols):
+                for i in range(max_len - len(str(self.grid[r][c])) + 1):
+                    to_print = to_print + " "
+                to_print = to_print + str(self.grid[r][c])
+            print(to_print)
