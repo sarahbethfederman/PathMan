@@ -20,8 +20,8 @@ class Grid():
         self.max_val = 0  # Set by pattern generation
         self.rand_seed = rand_seed
         self.pattern = pattern
-        self.solution = None  # Can only be assigned by generating a grid
-        self.path = None  # Can only be assigned by generating a grid
+        self.solution = []  # Can only be assigned by generating a grid
+        self.path = []  # Can only be assigned by generating a grid
 
     def get_valid_next(self, pos, path):
         """given a current position and path, returns a list of valid next
@@ -83,7 +83,9 @@ class Grid():
                     if (r, c) not in self.path:
                         num = random.randint(self.min_val, self.max_val)
                         self.grid[r][c] = num
-
+            
+            for p in self.path:
+                self.solution.append(self.grid[p[0]][p[1]])
 
         else:
             self.grid = [[random.randint(self.min_val, 1000)
