@@ -1,0 +1,50 @@
+<h1>Final Proposal</h1>
+<h2>Team Members:</h2>
+<table> 
+<tr>
+	<td>Josh Ladisic </td>
+	<td>jal5313@rit.edu</td>
+</tr>
+<tr>
+	<td>Ryan Gannon</td>
+	<td>rmg8548</td>
+</tr>
+<tr>
+	<td>Sarah Federman</td>
+	<td>sarah@mail.rit.edu</td>
+</tr>
+</table>
+
+<h2>Project: </h2>
+<p>PathMan</p>
+
+<h2>Brief Description</h2>
+<p>The team will create a game which is designed to help fourthgraders recognize patterns more quickly and easily. </p>
+
+<h2>Team Roles: </h2>
+<p>(Tentative) Sarah will design and develop the front end of the program. Ryan will program the engine/back end. Josh will help with front end design, some back end programming, do user testing, and handle documentation. </p>
+
+<h2>Our Repository </h2>
+<p><a href="https://github.com/sarahbethfederman/pathman">PathMan</a></p>
+
+<h2>Mentors: </h2>
+<p>Mentor details coming soon! </p>
+
+<h2>Team Communication: </h2>
+<p>Email, IRC, and Issue Tracker. </p>
+
+<h2>Easy Parts: </h2>
+<ul> 
+	<li>Generating a grid of numbers</li>
+	<li>Basic game functions (timer, move counter, etc)</li>
+	<li>Basic front end designs</li>
+</ul>
+
+<h2>Hard Parts: </h2>
+<ul>
+	<li>Checking for a guaranteed correct solution</li>
+	<li>Ensuring the player doesn't break any game rules</li>
+</ul>
+
+<h2>Plan: </h2> 
+<p>The team will use eachother's knowledge to attempt to figure out any issues. If that fails, we can look to our upstream mentors. Milestones and issues will be tracked via GitHub.</p>
