@@ -10,4 +10,4 @@ g = Grid(10, 10, 0, 123, p)
 g.generate_grid()
 g.print_grid()
 
-p.humanize()
+print(p.humanize())
