@@ -15,28 +15,28 @@ class Player():
     def move(self, direction):
         """Moves the player in some direction. Called by event handler."""
 
-        if direction == "up"
-            if self.pos_y > 0
+        if direction == "up":
+            if self.pos_y > 0:
                 self.pos_y -= 1
-            else
+            else:
                 print("Player at top, cannot move up")
 
-        elif direction == "down"
-            if self.pos_y < self.cols
+        elif direction == "down":
+            if self.pos_y < self.cols:
                 self.pos_y += 1
-            else 
+            else:
                 print("Player at bottom, cannot move down")
 
-        elif direction == "left"
-            if self.pos_x > 0
+        elif direction == "left":
+            if self.pos_x > 0:
                 self.pos_x -= 1
-            else
+            else:
                 print("Player at left edge, cannot move left")
 
-        elif direction == "right"
-            if self.pos_x < self.rows
+        elif direction == "right":
+            if self.pos_x < self.rows:
                 self.pos_x += 1
-            else 
+            else:
                 print("Player at right edge, cannot move right")
 
     def is_valid(self):
