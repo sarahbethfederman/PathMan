@@ -4,7 +4,12 @@ from player import *
 
 adding_Operations = True
 adding_Seed = False
+playing = False
+
 p = Pattern()
+
+print("----WELCOME to PATHMAN-------")
+print("----SETUP: Add Operations----")
 
 print("Please add operations. When done, type 'finished' or type 'standard' for a standard grid")
 
@@ -27,12 +32,44 @@ while adding_Operations == True:
         p.add_operation(user_input)
 
 while adding_Seed == True:
+    print("----SETUP: Select Seed----")
     user_input = raw_input("Select a seed (any number): ")
     g = Grid(10, 10, 0, user_input, p)
     adding_Seed = False
 
-
 g.generate_grid()
+
+playing = True
+main_character = Player(0, 0, g.rows, g.cols, g.path)
+
+print("------GAME BEGIN------")
+print("-----Turn: " + str(main_character.move_counter) + " ---------------------------")
+print("-----Mistakes: " + str(main_character.mistakes_counter) + " -----------------------")
+print("-----Current player location: " + str(main_character.pos_y) + ", " + str(main_character.pos_x) + " -----")
+print("-----Pattern: " + str(p.humanize()) + " ------")
 g.print_grid()
 
 print(p.humanize())
+
+print("Now Playing. Use commands 'up' 'down' 'right' and 'left' to move")
+
+while playing == True:
+    user_input = raw_input("Which way would you like to move: ")
+
+    if user_input == "quit":
+        playing = False
+        print("Quiting...")
+
+    if playing == True:
+        main_character.move(user_input)
+        print("-----Turn: " + str(main_character.move_counter) + " ---------------------------")
+        print("-----Mistakes: " + str(main_character.mistakes_counter) + " -----------------------")
+        posOutput = "-----Current player location: " + str(main_character.pos_y) + ", " + str(main_character.pos_x) + " -----"
+        print(posOutput)
+        print("-----Pattern: " + str(p.humanize()) + " ------")
+        g.print_grid()
+
+        if main_character.pos_x == main_character.rows:
+            if main_character.pos_y == main_character.cols:
+                print("Winner! ")
+                playing = False
