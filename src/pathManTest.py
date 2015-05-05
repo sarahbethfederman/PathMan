@@ -15,7 +15,7 @@ print("----SETUP: Add Operations----")
 print("Please add operations. When done, type 'finished' or type 'standard' for a standard grid")
 
 while adding_Operations == True:
-    user_input = raw_input("Add an operation: ")
+    user_input = input("Add an operation: ")
 
     if user_input == "finished":
         adding_Operations = False
@@ -34,7 +34,7 @@ while adding_Operations == True:
 
 while adding_Seed == True:
     print("----SETUP: Select Seed----")
-    user_input = raw_input("Select a seed (any number): ")
+    user_input = input("Select a seed (any number): ")
     g = Grid(10, 10, 0, user_input, p)
     adding_Seed = False
 
@@ -55,7 +55,7 @@ print(p.humanize())
 print("Now Playing. Use commands 'up' 'down' 'right' and 'left' to move")
 
 while playing == True:
-    user_input = raw_input("Which way would you like to move: ")
+    user_input = input("Which way would you like to move: ")
 
     if user_input == "quit":
         playing = False
