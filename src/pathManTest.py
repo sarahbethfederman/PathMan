@@ -8,6 +8,7 @@ playing = False
 
 p = Pattern()
 
+print("")
 print("----WELCOME to PATHMAN-------")
 print("----SETUP: Add Operations----")
 
@@ -69,7 +70,7 @@ while playing == True:
         print("-----Pattern: " + str(p.humanize()) + " ------")
         g.print_grid()
 
-        if main_character.pos_x == main_character.rows:
-            if main_character.pos_y == main_character.cols:
+        if main_character.pos_x == main_character.rows - 1:
+            if main_character.pos_y == main_character.cols -1:
                 print("Winner! ")
                 playing = False
