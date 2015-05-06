@@ -6,7 +6,9 @@ termcolor = True
 
 try:
     import termcolor 
+    print("YAY")
 except ImportError:
+    print("NAY")
     termcolor = False
 
 class Grid():
@@ -112,7 +114,8 @@ class Grid():
                     to_print = to_print + " "
 
                 if termcolor and row == r and col == c:
-                    to_print = to_print+'\033[1m'+str(self.grid[r][c])+'\033[0m'
+                    #to_print = to_print+'\033[1m'+str(self.grid[r][c])+'\033[0m'
+                    to_print = to_print+'\033[1m'+'\033[31m'+str(self.grid[r][c])+'\033[0m'
                 else:
                     to_print = to_print + str(self.grid[r][c])
             print(to_print)
