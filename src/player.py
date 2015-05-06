@@ -1,39 +1,33 @@
 class Player(): 
-    """---MAY 4th HEAVY WIP. UNTESTED---"""
-    
     """Represents the player of a grid based game. """
 
-    def __init__(self, pos_x, pos_y, rows, cols, path):
+    def __init__(self, pos_x, pos_y, grid):
         """Constructor: Creates player with supplied values. """
-
-        self.rows = rows
-        self.cols = cols
 
         self.pos_x = pos_x
         self.pos_y = pos_y
 
         self.move_counter = 0
-        self.next_valid = False
+        #self.next_valid = False
         self.mistakes_counter = 0
 
-        self.path = path
+        self.grid = grid
+
 
     def move(self, direction):
         """Moves the player in some direction. Called by event handler."""
 
         if direction == "up":
             if self.pos_y > 0:
-                self.is_valid(-1, 0)
-                if self.next_valid == True:
+                if self.is_valid(-1, 0):
                     self.pos_y -= 1
                     self.move_counter += 1
             else:
                 print("Player at top, cannot move up")
 
         elif direction == "down":
-            if self.pos_y < self.cols:
-                self.is_valid(1, 0)
-                if self.next_valid == True:
+            if self.pos_y < self.grid.cols:
+                if self.is_valid(1, 0):
                     self.pos_y += 1
                     self.move_counter += 1
             else:
@@ -41,17 +35,15 @@ class Player():
 
         elif direction == "left":
             if self.pos_x > 0:
-                self.is_valid(0, -1)
-                if self.next_valid == True:
+                if self.is_valid(0, -1):
                     self.pos_x -= 1
                     self.move_counter += 1
             else:
                 print("Player at left edge, cannot move left")
 
         elif direction == "right":
-            if self.pos_x < self.rows:
-                self.is_valid(0, 1)
-                if self.next_valid == True:
+            if self.pos_x < self.grid.rows:
+                if self.is_valid(0, 1):
                     self.pos_x += 1
                     self.move_counter += 1
             else:
@@ -75,14 +67,20 @@ class Player():
         print(str("(" + str(self.pos_y + y_dif) + ", " + str(self.pos_x + x_dif) + ")"))
         """
 
-        #There must be a better way. 
         #Compares grid coordinates.
         #This compares the string output by the tuple to the string produced by the movement.
         #If they match, allow the move. 
-        if str("(" + str(self.pos_y + y_dif) + ", " + str(self.pos_x + x_dif) + ")") == str(self.path[self.move_counter + 1]):
-            self.next_valid = True
-        else:
-            self.next_valid = False
-            self.mistakes_counter += 1
 
-        print("Move is Correct: " + str(self.next_valid))
+        new_x = self.pos_x + x_dif
+        new_y = self.pos_y + y_dif
+        new_pos = (self.pos_y + y_dif, self.pos_x + x_dif)
+        current_tile = self.grid.get_tile(self.pos_y, self.pos_x)
+        new_tile = self.grid.pattern.apply_pattern(current_tile)
+
+        if new_pos in self.grid.path and new_tile in self.grid.solution: 
+            print("Correct Move")
+            return True
+        else:
+            self.mistakes_counter += 1
+            return False
+

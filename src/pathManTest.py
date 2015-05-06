@@ -41,14 +41,14 @@ while adding_Seed == True:
 g.generate_grid()
 
 playing = True
-main_character = Player(0, 0, g.rows, g.cols, g.path)
+main_character = Player(0, 0, g)
 
 print("------GAME BEGIN------")
 print("-----Turn: " + str(main_character.move_counter) + " ---------------------------")
 print("-----Mistakes: " + str(main_character.mistakes_counter) + " -----------------------")
 print("-----Current player location: " + str(main_character.pos_y) + ", " + str(main_character.pos_x) + " -----")
 print("-----Pattern: " + str(p.humanize()) + " ------")
-g.print_grid()
+g.print_grid(main_character.pos_y, main_character.pos_x)
 
 print(p.humanize())
 
@@ -70,7 +70,7 @@ while playing == True:
         print("-----Pattern: " + str(p.humanize()) + " ------")
         g.print_grid()
 
-        if main_character.pos_x == main_character.rows - 1:
-            if main_character.pos_y == main_character.cols -1:
+        if main_character.pos_x == g.rows - 1:
+            if main_character.pos_y == g.cols -1:
                 print("Winner! ")
                 playing = False

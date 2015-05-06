@@ -2,6 +2,12 @@
 import random
 import sys
 
+termcolor = True
+
+try:
+    import termcolor 
+except ImportError:
+    termcolor = False
 
 class Grid():
     """Represents a grid of integers, a game map"""
@@ -26,9 +32,8 @@ class Grid():
     def get_valid_next(self, pos, path):
         """given a current position and path, returns a list of valid next
            positions for the path, or an empty list if there are none.
-        """
-        out = []
-
+           THIS IS FOR GENERATING A PATH. DO NOT USE THIS TO CHECK PLAYER INPUT """    
+        out = [] 
         for i in range(-1, 2):
             for j in range(-1, 2):
                 if abs(i) == abs(j):
@@ -92,8 +97,9 @@ class Grid():
                           for i in range(self.rows)]
                          for j in range(self.cols)]
 
-    def print_grid(self, file=sys.stdout):
-        """Prints the grid to a file or stream, stdout by default."""
+    def print_grid(self, row=None, col=None):
+        """Prints the grid to stdout.  Optionally prints a number in bold"""
+        global termcolor
         if self.max_val > 0:
             max_len = len(str(self.max_val))
         else:
@@ -105,4 +111,10 @@ class Grid():
                 for i in range(max_len - len(str(self.grid[r][c])) + 1):
                     to_print = to_print + " "
                 to_print = to_print + str(self.grid[r][c])
-            print(to_print)
+            if row and col and termcolor:
+                termcolor.cprint(to_print, attrs=['bold'])
+            else:
+                print(to_print)
+
+    def get_tile(self, row, col):
+        return self.grid[row][col]
