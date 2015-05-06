@@ -22,15 +22,24 @@ class Pattern():
 
     def apply_pattern(self, num):
         for op in self.ops:
-            if op[0] == "*":
-                num = num * int(op[1:])
-            elif op[0] == "+":
+            if op[0] == "+":
                 num = num + int(op[1:])
             elif op[0] == "-":
                 num = num - int(op[1:])
             else:
                 num = None
         return num
+
+    def get_prev(self, num):
+        for op in self.ops:
+            if op[0] == "+":
+                num = num - int(op[1:])
+            elif op[0] == "-":
+                num = num + int(op[1:])
+            else:
+                num = None
+        return num
+
 
     def humanize(self):
         """Returns the pattern as a human-readable string"""

@@ -74,10 +74,12 @@ class Player():
         new_x = self.pos_x + x_dif
         new_y = self.pos_y + y_dif
         new_pos = (self.pos_y + y_dif, self.pos_x + x_dif)
-        current_tile = self.grid.get_tile(self.pos_y, self.pos_x)
-        new_tile = self.grid.pattern.apply_pattern(current_tile)
+        cur_tile = self.grid.get_tile(self.pos_y, self.pos_x)
+        new_tile = self.grid.get_tile(new_y, new_x)
+        valid_next = self.grid.pattern.apply_pattern(cur_tile)
+        valid_prev = self.grid.pattern.get_prev(cur_tile)
 
-        if new_pos in self.grid.path and new_tile in self.grid.solution: 
+        if new_tile in (valid_next, valid_prev): 
             print("Correct Move")
             return True
         else:
