@@ -54,8 +54,12 @@ print(p.humanize())
 
 print("Now Playing. Use commands 'up' 'down' 'right' and 'left' to move")
 
-while playing == True:
-    user_input = input("Which way would you like to move: ")
+while playing:
+    try:
+        user_input = input("Which way would you like to move: ")
+    except EOFError:
+        print("Okay, fine.  Guess you don't want to play.")
+        break
 
     if user_input == "quit":
         playing = False
@@ -68,7 +72,7 @@ while playing == True:
         posOutput = "-----Current player location: " + str(main_character.pos_y) + ", " + str(main_character.pos_x) + " -----"
         print(posOutput)
         print("-----Pattern: " + str(p.humanize()) + " ------")
-        g.print_grid()
+        g.print_grid(main_character.pos_y, main_character.pos_x)
 
         if main_character.pos_x == g.rows - 1:
             if main_character.pos_y == g.cols -1:

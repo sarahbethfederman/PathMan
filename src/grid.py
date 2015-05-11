@@ -6,7 +6,9 @@ termcolor = True
 
 try:
     import termcolor 
+    print("YAY")
 except ImportError:
+    print("NAY")
     termcolor = False
 
 class Grid():
@@ -110,11 +112,13 @@ class Grid():
             for c in range(self.cols):
                 for i in range(max_len - len(str(self.grid[r][c])) + 1):
                     to_print = to_print + " "
-                to_print = to_print + str(self.grid[r][c])
-            if row and col and termcolor:
-                termcolor.cprint(to_print, attrs=['bold'])
-            else:
-                print(to_print)
+
+                if termcolor and row == r and col == c:
+                    #to_print = to_print+'\033[1m'+str(self.grid[r][c])+'\033[0m'
+                    to_print = to_print+'\033[1m'+'\033[31m'+str(self.grid[r][c])+'\033[0m'
+                else:
+                    to_print = to_print + str(self.grid[r][c])
+            print(to_print)
 
     def get_tile(self, row, col):
         return self.grid[row][col]
