@@ -1,3 +1,4 @@
+from __future__ import print_function
 from pattern import *
 from grid import *
 from player import *
@@ -15,7 +16,7 @@ print("----SETUP: Add Operations----")
 print("Please add operations. When done, type 'finished' or type 'standard' for a standard grid")
 
 while adding_Operations == True:
-    user_input = input("Add an operation: ")
+    user_input = raw_input("Add an operation: ")
 
     if user_input == "finished":
         adding_Operations = False
@@ -34,7 +35,7 @@ while adding_Operations == True:
 
 while adding_Seed == True:
     print("----SETUP: Select Seed----")
-    user_input = input("Select a seed (any number): ")
+    user_input = raw_input("Select a seed (any number): ")
     g = Grid(10, 10, 0, user_input, p)
     adding_Seed = False
 
@@ -56,7 +57,7 @@ print("Now Playing. Use commands 'up' 'down' 'right' and 'left' to move")
 
 while playing:
     try:
-        user_input = input("Which way would you like to move: ")
+        user_input = raw_input("Which way would you like to move: ")
     except EOFError:
         print("Okay, fine.  Guess you don't want to play.")
         break
