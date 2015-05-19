@@ -4,3 +4,9 @@ Educational pattern recognition game for XO PCs. Designed for fourth grade stude
 # License
 It's GPL v3
 ...Because Freedom!
+
+#Installation and Execution
+To play the game from a command line, run
+    python pathManTest.py
+
+To play the game with graphics, run the .xo file on the XO PC.
