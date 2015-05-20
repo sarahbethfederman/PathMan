@@ -122,4 +122,7 @@ class Grid():
             print(to_print)
 
     def get_tile(self, row, col):
-        return self.grid[row][col]
+        try:
+            return self.grid[row][col]
+        except:
+            return None
