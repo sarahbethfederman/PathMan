@@ -11,12 +11,13 @@ screenRect = screen.get_rect()
 
 backgroundImg = pygame.image.load("../assets/images/bg.png")
 backgroundRect = backgroundImg.get_rect()
+
 arcadeFont48 = pygame.font.Font("../assets/font/ARCADECLASSIC.TTF", 48)
 arcadeFont24 = pygame.font.Font("../assets/font/ARCADECLASSIC.TTF", 24)
+arcadeFont18 = pygame.font.Font("../assets/font/ARCADECLASSIC.TTF", 18)
+
 title = arcadeFont48.render("PATHMAN", 1, (0, 255, 0))
 subTitle = arcadeFont24.render("PATTERN RECOGNITION MAZE GAME", 1, (0, 255, 0))
-titleRect = title.get_rect()
-subTitleRect = subTitle.get_rect()
 
 running = False
 playing = False
@@ -50,6 +51,7 @@ def start():
     screen.blit(backgroundImg, (0, 0))
     screen.blit(title, (20, 20))
     screen.blit(subTitle, (215, 35))
+    display_grid()
     pygame.display.flip()
 
 def run():
@@ -85,6 +87,7 @@ def run():
                         main_character.move("left")
 
                     playGrid.print_grid(main_character.pos_y, main_character.pos_x)
+                    display_grid()
 
             if main_character.pos_x == playGrid.rows - 1:
                 if main_character.pos_y == playGrid.cols -1:
@@ -92,6 +95,24 @@ def run():
 
                     global playing
                     playing = False
+
+def display_grid():
+    for x in range(0, playGrid.rows):
+        for y in range(0, playGrid.cols):
+            if main_character.pos_x == x and main_character.pos_y == y:
+                print("drawing player")
+                number = arcadeFont18.render(str(playGrid.get_tile(y, x)), 1, (0, 255, 0))
+            elif x == 0 and y == 0:
+                print("drawing start")
+                number = arcadeFont18.render(str(playGrid.get_tile(y, x)), 1, (0, 147, 255))
+            elif x == playGrid.rows -1 and y == playGrid.cols -1:
+                print("drawing end")
+                number = arcadeFont18.render(str(playGrid.get_tile(y, x)), 1, (0, 147, 255))
+            else: 
+                number = arcadeFont18.render(str(playGrid.get_tile(y, x)), 1, (147, 147, 147))
+
+            screen.blit(number, (((x * 50) + 50), ((y * 50) +90)))
+    pygame.display.flip()
 
 start()
 run()
