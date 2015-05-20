@@ -13,6 +13,9 @@ class Player():
 
         self.grid = grid
 
+        self.visitedPath = []
+        self.mistakesTracker = []
+
 
     def move(self, direction):
         """Moves the player in some direction. Called by event handler."""
@@ -81,8 +84,10 @@ class Player():
 
         if new_tile in (valid_next, valid_prev): 
             print("Correct Move")
+            self.visitedPath.append(str(new_y) + ", " +str(new_x))
             return True
         else:
             self.mistakes_counter += 1
+            self.mistakesTracker.append(str(new_y) + ", " +str(new_x))
             return False
 

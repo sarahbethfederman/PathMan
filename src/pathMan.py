@@ -33,7 +33,7 @@ print("SETTING UP AUTOMATIC LEVEL...")
 
 def start(): 
     print("Starting.")
-    
+
     global p
     p = Pattern()
 
@@ -108,6 +108,10 @@ def display_grid():
             if main_character.pos_x == x and main_character.pos_y == y:
                 print("drawing player")
                 number = arcadeFont18.render(str(playGrid.get_tile(y, x)), 1, (0, 255, 0))
+            elif str(str(y) + ", " + str(x)) in main_character.visitedPath:
+                number = arcadeFont18.render(str(playGrid.get_tile(y, x)), 1, (0, 147, 0))
+            elif str(str(y) + ", " + str(x)) in main_character.mistakesTracker:
+                number = arcadeFont18.render(str(playGrid.get_tile(y, x)), 1, (147, 0, 0))
             elif x == 0 and y == 0:
                 print("drawing start")
                 number = arcadeFont18.render(str(playGrid.get_tile(y, x)), 1, (0, 147, 255))
