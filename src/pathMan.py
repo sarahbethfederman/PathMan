@@ -5,8 +5,18 @@ from grid import *
 from player import *
 
 pygame.init()
-size = width, height = 1200, 900
+size = width, height = 800, 600
 screen = pygame.display.set_mode(size)
+screenRect = screen.get_rect()
+
+backgroundImg = pygame.image.load("../assets/images/bg.png")
+backgroundRect = backgroundImg.get_rect()
+arcadeFont48 = pygame.font.Font("../assets/font/ARCADECLASSIC.TTF", 48)
+arcadeFont24 = pygame.font.Font("../assets/font/ARCADECLASSIC.TTF", 24)
+title = arcadeFont48.render("PATHMAN", 1, (0, 255, 0))
+subTitle = arcadeFont24.render("PATTERN RECOGNITION MAZE GAME", 1, (0, 255, 0))
+titleRect = title.get_rect()
+subTitleRect = subTitle.get_rect()
 
 running = False
 playing = False
@@ -36,6 +46,11 @@ def start():
 
     global playing
     playing = True
+
+    screen.blit(backgroundImg, (0, 0))
+    screen.blit(title, (20, 20))
+    screen.blit(subTitle, (215, 35))
+    pygame.display.flip()
 
 def run():
     playGrid.print_grid(0, 0)
