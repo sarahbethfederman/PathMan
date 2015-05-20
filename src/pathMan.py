@@ -47,6 +47,11 @@ def run():
             sys.exit()
 
     while running == True: 
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT: 
+                print("Quitting!")
+                sys.exit()
+
         while playing == True:
 
             #handle events here! 
