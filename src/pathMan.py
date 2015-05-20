@@ -19,12 +19,19 @@ arcadeFont18 = pygame.font.Font("../assets/font/ARCADECLASSIC.TTF", 18)
 title = arcadeFont48.render("PATHMAN", 1, (0, 255, 0))
 subTitle = arcadeFont24.render("PATTERN RECOGNITION MAZE GAME", 1, (0, 255, 0))
 
+game_clock = pygame.time.Clock()
+clock_seconds = 60
+clock_millisec = 0
+
 running = False
 playing = False
 
 p = Pattern()
 playGrid = Grid()
 main_character = Player(0,0,playGrid)
+
+levels_won = 0
+levels_lost = 0
 
 running = True
 
@@ -51,6 +58,13 @@ def start():
     global playing
     playing = True
 
+    global game_clock
+    global clock_seconds
+    global clock_millisec
+    game_clock = pygame.time.Clock()
+    clock_seconds = 60
+    clock_millisec = 0
+
     screen.blit(backgroundImg, (0, 0))
     screen.blit(title, (20, 20))
     screen.blit(subTitle, (215, 35))
@@ -68,17 +82,25 @@ def run():
             sys.exit()
 
     while running == True: 
+
         for event in pygame.event.get():
             if event.type == pygame.QUIT: 
                 print("Quitting!")
                 sys.exit()
 
         while playing == True:
+            screen.blit(backgroundImg, (0, 0))
+            screen.blit(title, (20, 20))
+            screen.blit(subTitle, (215, 35))
+            display_grid()
+            display_pattern()
+            display_levels()
+
+            update_clock()
 
             #handle events here! 
             for event in pygame.event.get():
-                if event.type == pygame.QUIT: 
-                    print("Quitting!")
+                if event.type == pygame.QUIT:
                     sys.exit()
                 elif event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_UP:
@@ -97,36 +119,72 @@ def run():
                 if main_character.pos_y == playGrid.cols -1:
                     print("Winner! ")
 
+                    global levels_won
+                    levels_won += 1
+
                     global playing
                     playing = False
 
                     start()
+            pygame.display.flip()
 
 def display_grid():
     for x in range(0, playGrid.rows):
         for y in range(0, playGrid.cols):
             if main_character.pos_x == x and main_character.pos_y == y:
-                print("drawing player")
                 number = arcadeFont18.render(str(playGrid.get_tile(y, x)), 1, (0, 255, 0))
             elif str(str(y) + ", " + str(x)) in main_character.visitedPath:
                 number = arcadeFont18.render(str(playGrid.get_tile(y, x)), 1, (0, 147, 0))
             elif str(str(y) + ", " + str(x)) in main_character.mistakesTracker:
                 number = arcadeFont18.render(str(playGrid.get_tile(y, x)), 1, (147, 0, 0))
             elif x == 0 and y == 0:
-                print("drawing start")
                 number = arcadeFont18.render(str(playGrid.get_tile(y, x)), 1, (0, 147, 255))
             elif x == playGrid.rows -1 and y == playGrid.cols -1:
-                print("drawing end")
                 number = arcadeFont18.render(str(playGrid.get_tile(y, x)), 1, (0, 147, 255))
             else: 
                 number = arcadeFont18.render(str(playGrid.get_tile(y, x)), 1, (147, 147, 147))
 
             screen.blit(number, (((x * 50) + 50), ((y * 50) +90)))
-    pygame.display.flip()
 
 def display_pattern():
     patternDisp = arcadeFont24.render(str(p.humanize()), 1, (0, 255, 0))
     screen.blit(patternDisp, (590, 270))
+
+def display_levels():
+    global levels_won
+    global levels_lost
+
+    won_text = arcadeFont24.render("Levels Won: " + str(levels_won), 1, (0, 255, 0))
+    lost_text = arcadeFont24.render("Levels Lost: " + str(levels_lost), 1, (255, 0, 0))  
+    
+    screen.blit(won_text, (590, 370))
+    screen.blit(lost_text, (590, 400))  
+
+def update_clock():
+    global game_clock
+    global clock_millisec
+    global clock_seconds
+
+    if clock_millisec > 1000:
+        clock_seconds -= 1
+        clock_millisec -= 1000
+
+    timerText = arcadeFont48.render(str(clock_seconds), 1, (255, 0, 0))
+    timerTextRect = timerText.get_rect()
+
+    screen.blit(timerText, (650, 170))
+    pygame.display.flip()
+
+    clock_millisec += game_clock.tick_busy_loop(60)
+
+    if clock_seconds <= 0:
+        print("GAME OVER")
+
+        global levels_lost
+        levels_lost += 1
+
+        global start
+        start()
 
 start()
 run()
