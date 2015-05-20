@@ -33,7 +33,10 @@ print("SETTING UP AUTOMATIC LEVEL...")
 
 def start(): 
     print("Starting.")
-    #p.add_operation('+1')
+    
+    global p
+    p = Pattern()
+
     p.add_operation(str('+' + str(random.randrange(5, 9))))
     p.add_operation(str('-' + str(random.randrange(1, 4))))
     print(str(p.humanize()))
@@ -52,6 +55,7 @@ def start():
     screen.blit(title, (20, 20))
     screen.blit(subTitle, (215, 35))
     display_grid()
+    display_pattern()
     pygame.display.flip()
 
 def run():
@@ -96,6 +100,8 @@ def run():
                     global playing
                     playing = False
 
+                    start()
+
 def display_grid():
     for x in range(0, playGrid.rows):
         for y in range(0, playGrid.cols):
@@ -113,6 +119,10 @@ def display_grid():
 
             screen.blit(number, (((x * 50) + 50), ((y * 50) +90)))
     pygame.display.flip()
+
+def display_pattern():
+    patternDisp = arcadeFont24.render(str(p.humanize()), 1, (0, 255, 0))
+    screen.blit(patternDisp, (590, 270))
 
 start()
 run()
